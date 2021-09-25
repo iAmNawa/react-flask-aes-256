@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { Buffer } from 'buffer'
 
 function InputTryTwo() {
   const sendData = () => {
