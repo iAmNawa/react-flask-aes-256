@@ -15,25 +15,39 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/user-info', methods = ['GET'])
 def main():
+    from Cryptodome.Cipher import AES
+    from hashlib import md5
+    import base64
+
     user_string = request.args.get('user_string')
-    password = '00000000000000000000000000000000'
-    iv = '0000000000000000';
-    user_string = bytes(user_string, 'utf-8')
-    print(user_string)
+    password = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+
     def unpad (padded):
         pad = ord(chr(padded[-1]))
         return padded[:-pad]
 
+    def get_key_iv (password):
+        m = md5()
+        m.update(password.encode('utf-8'))
+        key = m.hexdigest()
+
+        m = md5()
+        m.update((password + key).encode('utf-8'))
+        iv = m.hexdigest()
+
+        return [key,iv]
+
     def _decrypt(edata, password):
         edata = base64.urlsafe_b64decode(edata)
-        #key,iv = get_key_iv(password)
+        key,iv = get_key_iv(password)
 
-        aes = AES.new(password.encode('utf-8'), AES.MODE_CBC, iv.encode('utf-8'))
+        aes = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv[:16].encode('utf-8'))
         return unpad(aes.decrypt(edata))
 
-    print(_decrypt(user_string, 'utf-8'), password)
+    plaintext = _decrypt(user_string, password)
+    print(plaintext)
 
-    return 'hello'
+    return plaintext
 
 if __name__ == "__main__":
     app.run(port=4444, debug=True)
