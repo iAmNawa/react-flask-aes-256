@@ -2,7 +2,10 @@ import axios from 'axios'
 
 function InputComponent() {
   const sendData = () => {
-    console.log(axios)
+    axios.get('http://localhost:4444/user-info')
+      .then(res => {
+        console.log(res)
+      })
   }
   return (
     <div>

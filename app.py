@@ -7,9 +7,9 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-@app.route('/', methods = ['GET'])
+@app.route('/user-info', methods = ['GET'])
 def main():
-    return 'hello it is python'
+    return 'user info working'
 
 if __name__ == "__main__":
     app.run(port=4444, debug=True)
