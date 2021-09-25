@@ -1,6 +1,13 @@
+import axios from 'axios'
+
 function InputComponent() {
+  const sendData = () => {
+    console.log(axios)
+  }
   return (
-    <div>hello</div>
+    <div>
+      <button onClick={sendData}>click me</button>
+    </div>
   )
 }
 
