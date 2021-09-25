@@ -4,28 +4,20 @@ import { Buffer } from 'buffer'
 function InputTryTwo() {
   const sendData = () => {
 
-    var aes256 = {},
-        crypto = require('crypto'),
-        algorithm = 'aes-256-cbc';
+    var crypto = require('crypto');
+    var assert = require('assert');
 
-    aes256.encrypt = function (key, data) {
-        var sha256 = crypto.createHash('sha256');
-        sha256.update(key);
+    var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
+    var key = '00000000000000000000000000000000';
+    var iv = '0000000000000000';
+    var text = 'this-needs-to-be-encrypted';
 
-        var iv = crypto.randomBytes(16),
-            plaintext = new Buffer(data),
-            cipher = crypto.createCipheriv(algorithm, sha256.digest(), iv),
-            ciphertext = cipher.update(plaintext);
-        ciphertext = Buffer.concat([iv, ciphertext, cipher.final()]);
+    var cipher = crypto.createCipheriv(algorithm, key, iv);
+    var encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
+    console.log('encrypted', encrypted, encrypted.length)
 
-        return ciphertext.toString('base64');
-  };
-  let user_key = '1234567890123456'
-  let user_data = 'username'
-  let encrypted_string = aes256.encrypt(user_key, user_data)
-  console.log(encrypted_string)
     axios.get('http://localhost:4444/user-info', {
-      params: { user_string: encrypted_string }
+      params: { user_string: encrypted }
     })
       .then(res => {
         console.log(res)
