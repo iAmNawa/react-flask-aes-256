@@ -20,7 +20,7 @@ function InputComponent() {
 
         return ciphertext.toString('base64');
   };
-  let user_key = '12345678'
+  let user_key = '1234567890123456'
   let user_data = 'username'
   let encrypted_string = aes256.encrypt(user_key, user_data)
   console.log(encrypted_string)

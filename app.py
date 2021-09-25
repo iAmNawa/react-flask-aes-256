@@ -4,8 +4,8 @@ from flask_cors import CORS, cross_origin
 from flask import jsonify
 import base64
 import hashlib
-from Crypto import Random
-from Crypto.Cipher import AES
+from Cryptodome import Random
+from Cryptodome.Cipher import AES
 
 
 app = Flask(__name__)
@@ -14,8 +14,8 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/user-info', methods = ['GET'])
 def main():
-    key = '12345678'
-    def decrypt(self, enc):
+    key = '1234567890123456'
+    def decrypt(enc):
         enc = base64.b64decode(enc)
         iv = enc[:AES.block_size]
         cipher = AES.new(key, AES.MODE_CBC, iv)
