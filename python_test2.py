@@ -5,7 +5,7 @@ import base64
 password = '00000000000000000000000000000000'
 iv = '0000000000000000';
 input = 'hello world'
-output = 'UhbVSFjVt-gidWEGsnmqVA=='
+output = b'761c3c0bfc19dfea2ca03927a1d8565'
 
 BLOCK_SIZE = 16
 
@@ -50,5 +50,7 @@ def _decrypt(edata, password):
 
 output = _encrypt(input, password)
 print(output)
-plaintext = _decrypt(output, password)
+plaintext = _decrypt(b'e761c3c0bfc19dfea2ca03927a1d8565', password)
 print(plaintext)
+
+#print(bytes('761c3c0bfc19dfea2ca03927a1d8565', 'utf-8'))

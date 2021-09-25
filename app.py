@@ -15,17 +15,25 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/user-info', methods = ['GET'])
 def main():
-
     user_string = request.args.get('user_string')
-    key = b'1234567890123456'
-    enc = base64.b64decode(user_string)
-    iv = enc[:AES.block_size]
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    username = cipher.decrypt(user_string, 'utf-8')
-    print(len(username))
-    user_string = request.args.get('user_string')
+    password = '00000000000000000000000000000000'
+    iv = '0000000000000000';
+    user_string = bytes(user_string, 'utf-8')
+    print(user_string)
+    def unpad (padded):
+        pad = ord(chr(padded[-1]))
+        return padded[:-pad]
 
-    return result
+    def _decrypt(edata, password):
+        edata = base64.urlsafe_b64decode(edata)
+        #key,iv = get_key_iv(password)
+
+        aes = AES.new(password.encode('utf-8'), AES.MODE_CBC, iv.encode('utf-8'))
+        return unpad(aes.decrypt(edata))
+
+    print(_decrypt(user_string, 'utf-8'), password)
+
+    return 'hello'
 
 if __name__ == "__main__":
     app.run(port=4444, debug=True)

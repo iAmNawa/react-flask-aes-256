@@ -13,7 +13,6 @@ function InputTryTwo() {
 
     var cipher = crypto.createCipheriv(algorithm, key, iv);
     var encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');
-    console.log('encrypted', encrypted, encrypted.length)
 
     axios.get('http://localhost:4444/user-info', {
       params: { user_string: encrypted }
