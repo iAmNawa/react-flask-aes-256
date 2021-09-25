@@ -46,7 +46,6 @@ def main():
         return unpad(aes.decrypt(edata))
 
     plaintext = _decrypt(user_string, password)
-    print(plaintext)
 
     return plaintext
 
