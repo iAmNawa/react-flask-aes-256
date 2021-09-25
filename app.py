@@ -32,6 +32,7 @@ def main():
         key = m.hexdigest()
 
         m = md5()
+        #use password and hexadecimal encoding to create initialization vector
         m.update((password + key).encode('utf-8'))
         iv = m.hexdigest()
 

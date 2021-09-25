@@ -16,10 +16,11 @@ function InputComponent() {
         var key = m.digest('hex');
 
         m = crypto.createHash('md5');
+        // use password and hexadecimal encoding to create initialization vector
         m.update(password + key)
         var iv = m.digest('hex');
 
-        var data = new Buffer(input, 'utf8').toString('binary');
+        var data = Buffer.from(input)
 
         var cipher = crypto.createCipheriv('aes-256-cbc', key, iv.slice(0,16));
 
