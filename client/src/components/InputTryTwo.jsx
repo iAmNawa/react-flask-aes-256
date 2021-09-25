@@ -9,7 +9,7 @@ function InputTryTwo() {
     var algorithm = 'aes256'; // or any other algorithm supported by OpenSSL
     var key = '00000000000000000000000000000000';
     var iv = '0000000000000000';
-    var text = 'this-needs-to-be-encrypted';
+    var text = 'hello world';
 
     var cipher = crypto.createCipheriv(algorithm, key, iv);
     var encrypted = cipher.update(text, 'utf8', 'hex') + cipher.final('hex');

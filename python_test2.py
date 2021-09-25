@@ -2,7 +2,8 @@ from Cryptodome.Cipher import AES
 from hashlib import md5
 import base64
 
-password = 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+password = '00000000000000000000000000000000'
+iv = '0000000000000000';
 input = 'hello world'
 output = 'UhbVSFjVt-gidWEGsnmqVA=='
 
@@ -28,20 +29,22 @@ def get_key_iv (password):
     return [key,iv]
 
 def _encrypt(data, password):
-
-    key,iv = get_key_iv(password)
+    # data is username
+    # iv is 16 0s
+    # key is 32 0s
+    #key,iv = get_key_iv(password)
     data = pad(data)
 
-    aes = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv[:16].encode('utf-8'))
+    aes = AES.new(password.encode('utf-8'), AES.MODE_CBC, iv.encode('utf-8'))
 
     encrypted = aes.encrypt(data.encode('utf-8'))
     return base64.urlsafe_b64encode(encrypted)
 
 def _decrypt(edata, password):
     edata = base64.urlsafe_b64decode(edata)
-    key,iv = get_key_iv(password)
+    #key,iv = get_key_iv(password)
 
-    aes = AES.new(key.encode('utf-8'), AES.MODE_CBC, iv[:16].encode('utf-8'))
+    aes = AES.new(password.encode('utf-8'), AES.MODE_CBC, iv.encode('utf-8'))
     return unpad(aes.decrypt(edata))
 
 
